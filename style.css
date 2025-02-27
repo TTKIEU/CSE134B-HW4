@@ -12,6 +12,16 @@
          url('Poppins-Regular.woff') format('woff');
     font-display: swap;
 }
+.error {
+    color: red;
+    font-size: 0.85em;
+    display: none;
+}
+
+.info {
+    color: gray;
+    font-size: 0.85em;
+}
 
 body {
     font-family: var(--font-main), var(--font-fallback);
@@ -238,13 +248,4 @@ dialog {
         font-size: 1em;
     }
 
-    .error {
-        color: red;
-        font-size: 0.85em;
-    }
-
-    .info {
-        color: gray;
-        font-size: 0.85em;
-    }
 }
