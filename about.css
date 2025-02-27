@@ -1,0 +1,112 @@
+
+:root {
+    --primary-color: color(display-p3 0.3 0.6 0.9);
+    --secondary-color: color(display-p3 0.9 0.6 0.3);
+    --font-main: 'Poppins', sans-serif;
+    --font-fallback: Arial, sans-serif;
+    --bg-gradient: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins-Regular.woff2') format('woff2'),
+         url('Poppins-Regular.woff') format('woff');
+    font-display: swap;
+}
+
+body {
+    font-family: var(--font-main), var(--font-fallback);
+    background: var(--bg-gradient);
+    color: #B2AC88;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.7);
+    position: sticky;
+    top: 0;
+}
+nav ul li {
+    padding: 15px;
+}
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
+}
+nav ul li a:hover {
+    color: yellow;
+    transform: scale(1.1);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+h1 {
+    animation: fadeIn 2s ease-in-out;
+}
+
+button {
+    background: white;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+button:hover {
+    background: yellow;
+    transform: scale(1.05);
+}
+
+.References {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px auto;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+    body {
+        font-size: 1rem;
+    }
+    .References {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    button {
+        font-size: 0.9rem;
+    }
+    .References {
+        width: 100%;
+    }
+}

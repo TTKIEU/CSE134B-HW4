@@ -1,0 +1,201 @@
+:root {
+    --primary-color: color(display-p3 0.3 0.6 0.9);
+    --secondary-color: color(display-p3 0.9 0.6 0.3);
+    --font-main: 'Poppins', sans-serif;
+    --font-fallback: Arial, sans-serif;
+    --bg-gradient: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins-Regular.woff2') format('woff2'),
+         url('Poppins-Regular.woff') format('woff');
+    font-display: swap;
+}
+
+body {
+    font-family: var(--font-main), var(--font-fallback);
+    background-color: #78866b;
+    background-image: url('background-texture.png');
+    background-size: cover;
+    background-blend-mode: multiply;
+    color: #F5F5DC; 
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.7);
+    position: sticky;
+    top: 0;
+}
+nav ul li {
+    padding: 15px;
+}
+nav ul li a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
+}
+nav ul li a:hover {
+    color: #F4C2C2;
+}
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #F4C2C2;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+nav ul li a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+h1 {
+    animation: fadeIn 2s ease-in-out;
+}
+
+button {
+    background: var(--secondary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+button:hover {
+    background: color-mix(in srgb, var(--secondary-color) 80%, black 20%);
+    transform: scale(1.1);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Center the References Table */
+.References {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px auto;
+}
+.References table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.References th, .References td {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.References th {
+    background: color-mix(in srgb, var(--primary-color) 70%, black 30%);
+    color: white;
+}
+
+.project-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.project-description {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.project-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+dialog {
+    position: absolute;
+    top: 10%;
+    left: 80%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+    body {
+        font-size: 1rem;
+    }
+    .References {
+        flex-direction: column;
+    }
+    .project-container {
+        max-width: 100%;
+    }
+    dialog {
+        width: 80%;
+        top: 5%;
+        left: 70%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    button {
+        font-size: 0.9rem;
+    }
+    .References {
+        width: 100%;
+    }
+    .project-description, .project-list {
+        width: 90%;
+    }
+    dialog {
+        width: 90%;
+        top: 2%;
+        left: 70%;
+    }
+}

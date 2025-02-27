@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Experiments!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            chi-ikawa{
+                display: block; 
+                border-radius: 5px;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="experiments.html">Experiments</a></li>
+                </ul>
+        </nav>
+        </header>
+        <h1>Experiments Page</h1>
+        <p>Press <kbd>Cmd</kbd> + <kbd>R</kbd> if the assets aren't loading.</p>
+        <chi-ikawa>
+            <p>this is my chiikawa</p>
+        </chi-ikawa>
+        <hello-world></hello-world>
+        <script>
+            class HelloWorld extends HTMLElement {
+                constructor() {
+                    super();
+                    console.log("Hello World!");
+                }
+            }
+            customElements.define("hello-world", HelloWorld);
+        </script>
+        <video width="320" height="240" controls>
+            <source src="videoTest.mp4" type="video/mp4">
+          </video>
+        <canvas id="canvasTag" width="200" height="100"></canvas>
+        <script>
+            var c = document.getElementById("canvasTag");
+            var ctx = c.getContext("2d");
+            ctx.font = "20px Arial";
+            ctx.fillText("This is my Experiment Canvas", 10, 50);
+        </script>
+        <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="pink" stroke-width="5" fill="pink" />
+        </svg>
+        <h3>List of my favorite Chiikawa characters</h3>
+        <input list="chiikawaOptions" id="chiikawaList" name="chiikawa-friends">
+
+        <datalist id="chiikawaOptions">
+            <option value="Chiikawa"></option>
+            <option value="Hachiware"></option>
+            <option value="Usagi"></option>
+            <option value="Momonga"></option>
+            <option value="Rakko"></option>
+        </datalist>
+        
+        <label for="chiikawaTrio">Choose a Chiikawa character:</label>
+
+        <select name="chiikawaTrioSelect" id="chiikawaTrio">
+          <option value="chiikawa">Chiikawa</option>
+          <option value="usagi">Usagi</option>
+          <option value="hachiware">Hachiware</option>
+        </select>
+        <h3>A quote from the <cite>Official Chiikawa</cite> website</h3>
+        <blockquote cite="https://www.chiikawaofficial.com/">
+            Across Japan, Chiikawa, Hachiware, and Usagi can be found everywhere from books to a TV series, in themed cafes, adorning trains, and they even have their own merchandise store on the famed Tokyo Station Character Street. And now these friends are here for you! 
+        </blockquote>
+        <p><abbr title="League of Legends">LOL</abbr> is a fun game</p>
+        <p><dfn>LOL</dfn> is a 5v5 MOBA consisting of three lanes and the jungle.</p>
+        <footer>
+            <address>
+                Contact me at: <a href="mailto:t1kieu@ucsd.edu">t1kieu@ucsd.edu</a>
+            </address>
+            <p>This page was made by and maintained by <i><strong><span style="color:pink">Taylin Kieu</span></strong></i></p>
+        </footer>
+    </body>
+    
+</html>
