@@ -198,4 +198,53 @@ dialog {
         top: 2%;
         left: 70%;
     }
+    form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    fieldset {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    legend {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    .form-field {
+        display: grid;
+        gap: 4px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .required {
+        color: red;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+    }
+
+    .error {
+        color: red;
+        font-size: 0.85em;
+    }
+
+    .info {
+        color: gray;
+        font-size: 0.85em;
+    }
 }
