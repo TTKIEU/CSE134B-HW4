@@ -5,7 +5,6 @@
         <title>About Me</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
-        <script defer src="script.js"></script>
         <style>
             aside {
               width: 30%;
@@ -16,7 +15,6 @@
             </style>
     </head>
     <body>
-        <button id="themeToggle">🌞</button>
         <header>
             <nav>
                 <ul>
@@ -95,23 +93,18 @@
                         <div class="form-field">
                             <label for="name">Name <span class="required">*</span>:</label>
                             <input type="text" id="name" name="name" placeholder="Firstname Lastname" required minlength="2" maxlength="50" pattern="^[A-Za-z ]+$">
-                            <span class="errorMessage" id="nameError">Invalid characters entered.</span>
                         </div>
                 
                         <div class="form-field">
                             <label for="email">Email <span class="required">*</span>:</label>
                             <input type="email" id="email" name="email" placeholder="email@example.com" required>
-                            <span class="errorMessage" id="emailError">Please enter a valid email.</span>
                         </div>
                 
                         <div class="form-field">
                             <label for="comments">Any Comments? <span class="required">*</span>:</label>
                             <textarea id="comments" name="comments" placeholder="Your message here..." required minlength="5" maxlength="300"></textarea>
-                            <span id="counter">300 characters remaining</span>
-                            <span class="errorMessage" id="commentsError" type="hidden">Character limit exceeded.</span>
                         </div>
                 
-                        <input type="hidden" name="formErrors" id="formErrors">
                         <button type="submit">Submit</button>
                     </fieldset>
                 </form>

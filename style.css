@@ -4,6 +4,10 @@
     --font-main: 'Poppins', sans-serif;
     --font-fallback: Arial, sans-serif;
     --bg-gradient: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+
+    
+    --bg-color: #78866b; 
+    --text-color: #000000;
 }
 
 @font-face {
@@ -17,15 +21,27 @@
     font-size: 0.85em;
     display: none;
 }
+#counter {
+    font-size: 0.9em;
+    color: pink;
+}
+
+#counter.warning {
+    color: orange;
+}
 
 .info {
     color: gray;
     font-size: 0.85em;
 }
+h1 {
+    animation: fadeIn 2s ease-in-out;
+}
 
 body {
     font-family: var(--font-main), var(--font-fallback);
-    background-color: #78866b;
+    /* background-color: #78866b;*/
+    background-color: var(--bg-color);
     background-image: url('background-texture.png');
     background-size: cover;
     background-blend-mode: multiply;
@@ -109,7 +125,7 @@ button:hover {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Center the References Table */
+
 .References {
     display: flex;
     justify-content: center;
@@ -216,36 +232,52 @@ dialog {
         width: 100%;
         max-width: 400px;
     }
+}
+.form-field {
+    display: grid;
+    gap: 4px;
+}
 
-    fieldset {
-        border: none;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
+.errorMessage {
+    color: red;
+    font-size: 0.9em;
+    display: none;
+}
 
-    legend {
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-    .form-field {
-        display: grid;
-        gap: 4px;
-    }
+label {
+    font-weight: bold;
+}
 
-    label {
-        font-weight: bold;
-    }
+.required {
+    color: red;
+}
 
-    .required {
-        color: red;
-    }
+[data-theme="dark"] {
+    --primary-color: color(display-p3 0.3 0.6 0.9);
+    --secondary-color: color(display-p3 0.9 0.6 0.3);
+    --font-main: 'Poppins', sans-serif;
+    --font-fallback: Arial, sans-serif;
+    --bg-gradient: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 
-    input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        font-size: 1em;
-    }
+    /* Dark Mode Colors */
+    --bg-color: #121212;   /* Dark background */
+    --text-color: #f5f5f5;}
 
+#themeToggle {
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+.form-field input:invalid,
+textarea:invalid {
+    border: 2px solid red;
+}
+
+.form-field input:valid,
+textarea:valid {
+    border: 2px solid green;
 }
