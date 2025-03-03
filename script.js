@@ -7,76 +7,78 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailError = document.getElementById("emailError");
     const commentsError = document.getElementById("commentsError");
     const commentCounter = document.getElementById("counter");
-    
-    const formErrorsField = document.getElementById("form-errors");
+    const formErrorsField = document.getElementById("formErrors");
+    const themeToggle = document.getElementById("themeToggle");
+
     let errorLog = [];
 
     function applyTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
+        themeToggle.textContent = theme === "dark" ? "🌙" : "🌞";
     }
 
     const savedTheme = localStorage.getItem("theme") || "light";
     applyTheme(savedTheme);
 
-    const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", function () {
         const currentTheme = document.documentElement.getAttribute("data-theme");
         const newTheme = currentTheme === "dark" ? "light" : "dark";
         applyTheme(newTheme);
-        themeToggle.textContent = newTheme === "dark" ? "🌙" : "🌞";
     });
 
-    function validateInput(input, errorElement, message, fieldName) {
-        if (!input.checkValidity()) {
-            errorElement.textContent = message;
-            errorElement.style.display = "inline";
-            input.classList.add("flash");
-            setTimeout(() => input.classList.remove("flash"), 500);
-            errorLog.push({ field: fieldName, error: message });
-            return false;
-        } else {
-            errorElement.style.display = "none";
-            input.classList.remove("flash");
-            return true;
-        }
+    function displayError(input, errorElement, message) {
+        errorElement.textContent = message;
+        errorElement.style.display = "inline";
+        input.classList.add("flash");
+        setTimeout(() => input.classList.remove("flash"), 500);
+    }
+
+    function clearError(input, errorElement) {
+        errorElement.textContent = "";
+        errorElement.style.display = "none";
+        input.classList.remove("flash");
     }
 
     function handleCommentsInput() {
         let remaining = 300 - commentsInput.value.length;
-        if (commentCounter) {
-            commentCounter.textContent = `${remaining} characters remaining`;
-        }
-        if (remaining <= 50) {
-            commentCounter.classList.add("warning");
-        } else {
-            commentCounter.classList.remove("warning");
-        }
+        if (commentCounter) commentCounter.textContent = `${remaining} characters remaining`;
+        commentCounter.classList.toggle("warning", remaining <= 50);
     }
 
-    nameInput.addEventListener("input", () => validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name"));
-    emailInput.addEventListener("input", () => validateInput(emailInput, emailError, "Enter a valid email.", "email"));
     commentsInput.addEventListener("input", handleCommentsInput);
 
-    form.addEventListener("submit", function (event) {
-        errorLog = [];
+    [nameInput, emailInput, commentsInput].forEach((input) => {
+        input.addEventListener("invalid", (e) => {
+            e.preventDefault();
+            let errorMessage = "";
+            let errorElement = null;
 
-        const isNameValid = validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name");
-        const isEmailValid = validateInput(emailInput, emailError, "Enter a valid email.", "email");
-        const isCommentsValid = validateInput(commentsInput, commentsError, "Must be between 5-300 characters.", "comments");
-        
-        if (!isNameValid || !isEmailValid || !isCommentsValid) {
-            event.preventDefault();
-            if (formErrorsField) {
-                formErrorsField.value = JSON.stringify(errorLog);
+            if (input === nameInput) {
+                errorMessage = "Only letters and spaces allowed.";
+                errorElement = nameError;
+            } else if (input === emailInput) {
+                errorMessage = "Enter a valid email.";
+                errorElement = emailError;
+            } else if (input === commentsInput) {
+                errorMessage = "Comment is required and must be under 300 characters.";
+                errorElement = commentsError;
             }
-        } else {
-            console.log("Form submitted successfully with data:", {
-                name: nameInput.value,
-                email: emailInput.value,
-                comments: commentsInput.value
-            });
+
+            if (errorElement) {
+                displayError(input, errorElement, errorMessage);
+                errorLog.push({ field: input.id, error: errorMessage });
+            }
+        });
+
+        input.addEventListener("input", () => {
+            clearError(input, input === nameInput ? nameError : input === emailInput ? emailError : commentsError);
+        });
+    });
+
+    form.addEventListener("submit", function () {
+        if (formErrorsField) {
+            formErrorsField.value = JSON.stringify(errorLog);
         }
     });
 });
-
