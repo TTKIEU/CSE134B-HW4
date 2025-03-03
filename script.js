@@ -8,33 +8,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const commentsError = document.getElementById("commentsError");
     const commentCounter = document.getElementById("counter");
     
-    const formErrorsField = document.getElementById("formErrors");
-    const themeToggle = document.getElementById("themeToggle");
+    const formErrorsField = document.getElementById("form-errors");
+    let errorLog = [];
 
     function applyTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
-        themeToggle.textContent = theme === "dark" ? "🌙" : "🌞";
     }
 
     const savedTheme = localStorage.getItem("theme") || "light";
     applyTheme(savedTheme);
 
+    const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", function () {
         const currentTheme = document.documentElement.getAttribute("data-theme");
         const newTheme = currentTheme === "dark" ? "light" : "dark";
-        
-        document.documentElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
+        applyTheme(newTheme);
         themeToggle.textContent = newTheme === "dark" ? "🌙" : "🌞";
     });
 
-    function validateInput(input, errorElement, message) {
+    function validateInput(input, errorElement, message, fieldName) {
         if (!input.checkValidity()) {
             errorElement.textContent = message;
             errorElement.style.display = "inline";
-            input.classList.add("flash"); 
+            input.classList.add("flash");
             setTimeout(() => input.classList.remove("flash"), 500);
+            errorLog.push({ field: fieldName, error: message });
             return false;
         } else {
             errorElement.style.display = "none";
@@ -43,59 +42,41 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function maskInput(input, regex, errorElement, message) {
-        input.addEventListener("input", function () {
-            if (!regex.test(input.value)) {
-                input.classList.add("flash");
-                errorElement.textContent = message;
-                errorElement.style.display = "inline";
-                setTimeout(() => input.classList.remove("flash"), 500);
-            } else {
-                errorElement.style.display = "none";
-            }
-        });
-    }
-
-    nameInput.addEventListener("input", () => validateInput(nameInput, nameError, "Only letters and spaces allowed."));
-    emailInput.addEventListener("input", () => validateInput(emailInput, emailError, "Enter a valid email."));
-    commentsInput.addEventListener("input", handleCommentsInput);
-
-    maskInput(nameInput, /^[A-Za-z ]*$/, nameError, "Invalid characters entered.");
     function handleCommentsInput() {
         let remaining = 300 - commentsInput.value.length;
-    
         if (commentCounter) {
             commentCounter.textContent = `${remaining} characters remaining`;
         }
-    
         if (remaining <= 50) {
             commentCounter.classList.add("warning");
         } else {
             commentCounter.classList.remove("warning");
         }
-
     }
+
+    nameInput.addEventListener("input", () => validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name"));
+    emailInput.addEventListener("input", () => validateInput(emailInput, emailError, "Enter a valid email.", "email"));
+    commentsInput.addEventListener("input", handleCommentsInput);
+
     form.addEventListener("submit", function (event) {
-        let errorLog = [];
-        if (!validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name")) errorLog.push({ field: "name", error: nameError.textContent });
-        if (!validateInput(emailInput, emailError, "Enter a valid email.", "email")) errorLog.push({ field: "email", error: emailError.textContent });
-        if (!validateInput(commentsInput, commentsError, "Must be between 5-300 characters.", "comments")) errorLog.push({ field: "comments", error: commentsError.textContent });
-        console.log("Errors logged:", errorLog); 
-        if (errors.length > 0) {
-            event.preventDefault(); 
-            console.log("Errors logged:", errorLog); 
+        errorLog = [];
+
+        const isNameValid = validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name");
+        const isEmailValid = validateInput(emailInput, emailError, "Enter a valid email.", "email");
+        const isCommentsValid = validateInput(commentsInput, commentsError, "Must be between 5-300 characters.", "comments");
+        
+        if (!isNameValid || !isEmailValid || !isCommentsValid) {
+            event.preventDefault();
             if (formErrorsField) {
-                formErrorsField.value = JSON.stringify(errorLog); 
+                formErrorsField.value = JSON.stringify(errorLog);
             }
-            
         } else {
             console.log("Form submitted successfully with data:", {
                 name: nameInput.value,
                 email: emailInput.value,
                 comments: commentsInput.value
             });
-
         }
     });
-    
 });
+
