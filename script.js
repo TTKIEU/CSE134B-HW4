@@ -82,12 +82,32 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!validateInput(nameInput, nameError, "Only letters and spaces allowed.")) errors.push({ field: "name", error: nameError.textContent });
         if (!validateInput(emailInput, emailError, "Enter a valid email.")) errors.push({ field: "email", error: emailError.textContent });
         if (!validateInput(commentsInput, commentsError, "Must be between 5-300 characters.")) errors.push({ field: "comments", error: commentsError.textContent });
-
+    
+        // Prevent default submission if there are errors, but force the POST request to be sent
         if (errors.length > 0) {
             event.preventDefault();
             if (formErrorsField) {
                 formErrorsField.value = JSON.stringify(errors);
             }
+    
+            // Force the form submission even with invalid inputs
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Form data sent to httpbin:', data);
+                alert('Form submitted successfully! Check the console for the response.');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     });
+    
+
+    
 });
