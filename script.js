@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name")) errorLog.push({ field: "name", error: nameError.textContent });
         if (!validateInput(emailInput, emailError, "Enter a valid email.", "email")) errors.push({ field: "email", error: emailError.textContent });
         if (!validateInput(commentsInput, commentsError, "Must be between 5-300 characters.", "comments")) errors.push({ field: "comments", error: commentsError.textContent });
-        
+        console.log("Errors logged:", errorLog); 
         if (errors.length > 0) {
             event.preventDefault(); 
             console.log("Errors logged:", errorLog); 
