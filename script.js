@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const formErrorsField = document.getElementById("formErrors");
     const themeToggle = document.getElementById("themeToggle");
+    let errorLog = [];
 
     function applyTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
@@ -76,20 +77,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
     form.addEventListener("submit", function (event) {
-        const errors = [];
-        errorLog = []; 
 
-        if (!validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name")) errors.push({ field: "name", error: nameError.textContent });
+        if (!validateInput(nameInput, nameError, "Only letters and spaces allowed.", "name")) errorLog.push({ field: "name", error: nameError.textContent });
         if (!validateInput(emailInput, emailError, "Enter a valid email.", "email")) errors.push({ field: "email", error: emailError.textContent });
         if (!validateInput(commentsInput, commentsError, "Must be between 5-300 characters.", "comments")) errors.push({ field: "comments", error: commentsError.textContent });
-
+        
         if (errors.length > 0) {
             event.preventDefault(); 
             console.log("Errors logged:", errorLog); 
             if (formErrorsField) {
                 formErrorsField.value = JSON.stringify(errorLog); 
             }
-            alert("Please fix the errors before submitting the form.");
+            
         } else {
             console.log("Form submitted successfully with data:", {
                 name: nameInput.value,
